@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+    <h1>Hello Django</h1>
+    <h1>Name : {{firstname}} {{lastname}}</h1>
+    <img src="{% static 'image/indoor-street.jpg' %}" alt="">
+    <img src="{% get_static_prefix %}image/library.jpg" alt="">
+    <br>
+    <form action="">
+        <input type="button" value="Click me" onclick="disp()" />
+    </form>
+    <script src="{% static 'javascript/main.js' %}"></script>
+</body>
+
+</html>

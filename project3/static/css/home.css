@@ -1,0 +1,25 @@
+*{
+    text-align: center;
+}
+
+table{
+    border: 1px solid black;
+}
+
+.data{
+    border: 1px solid black ;
+}
+
+
+
+th, td {
+    border: 1px solid black;
+    font-size: 25px;
+}
+
+a{
+    border: 1px solid black;
+    padding: 10px 30px;
+    background-color: chartreuse;
+}
+
