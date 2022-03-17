@@ -1,11 +1,15 @@
+import email
 from pyexpat import model
 from re import template
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from .models import student, info
 from .forms import StudentRegistrationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 class StudentListView(ListView):
@@ -73,3 +77,60 @@ class ShowFormData(View):
             reg = info(name=name, email=email, number=number, course=course)
             reg.save()
             return render(request, 'application/success.html', {'name': name, 'email':email, 'number':number, 'course':course})
+
+# def signupform(request):
+#     if request.method == 'POST':
+#         fm = SignUp(request.POST)
+#         if fm.is_valid():
+#             fm.save()
+#     else:
+#         fm = SignUp()
+#     return render(request, 'application/signup.html', {'form':fm})
+
+class SignUpForm(View):
+    def get(self, request):
+        return render(request, 'application/signup.html')
+
+    def post(self, request):
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, email, password1)
+        myuser.first_name = fname
+        myuser.last_name = lname
+        myuser.save()
+        return HttpResponseRedirect('/login/')
+
+
+class LogInForm(View):
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return render (request, 'application/login.html')
+        else:
+            return HttpResponseRedirect('/profile/')
+
+    def post(self, request):
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        user = authenticate(username = username, password = password1)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/profile/')
+        else:
+            return HttpResponseRedirect('/login/')
+
+class ProfilePage(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, 'application/profile.html')
+        else:
+            return HttpResponseRedirect('/login/')
+
+class UserLogOut(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect('/login/')

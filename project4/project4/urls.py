@@ -24,4 +24,9 @@ urlpatterns = [
     path('student2/<int:id>/',views.StudentDetailsView.as_view(), name = 'student2'),
     # path('fd/', views.showformdata),
     path('fd/', views.ShowFormData.as_view(), name='fd'),
+    # path('signup/', views.signupform, name='signup'),
+    path('signup/', views.SignUpForm.as_view(), name='signup'),
+    path('login/', views.LogInForm.as_view(), name='login'),
+    path('logout/', views.UserLogOut.as_view(), name='logout'),
+    path('profile/', views.ProfilePage.as_view(), name='profile'),
 ]
