@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -6,27 +7,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="name">Name : </label>
-        <input type="text" name="name" id="name"><br>
-
-        <label for="email">Email : </label>
-        <input type="email" name="email" id="email"><br>
-
-        <label for="pass">Password : </label>
-        <input type="password" name="pass" id="pass"><br>
-
-        <label for="re-pass">Password(Again) : </label>
-        <input type="text" name="re-pass" id="re-pass"><br>
-
-        <input type="submit" value="Log In" onsubmit="">
-
-        <p>For old user : <a href="{% url 'login' %}">Log in</a></p>
-    </form>
+    <div class="form-body">
+        <h1>Sign Up</h1><br>
+        <form action="" method="post" onsubmit="return validate()">
+            {% csrf_token %}
+            <label for="username">Username : </label>
+            <input type="text" name="username" id="username"><br>
+            <span class="error" id="error-uname"></span><br><br>  
+    
+            <label for="fname">First name : </label>
+            <input type="text" name="fname" id="fname"><br>
+            <span class="error" id="error-fname"></span><br><br>
+    
+            <label for="lname">Last name : </label>
+            <input type="text" name="lname" id="lname"><br>
+            <span class="error" id="error-lname"></span><br><br>
+    
+            <label for="email">Email : </label>
+            <input type="email" name="email" id="email"><br>
+            <span class="error" id="error-email"></span><br><br>
+    
+            <label for="password1">Password : </label>
+            <input type="password" name="password1" id="password1"><br>
+            <span class="error" id="error-pass"></span><br><br>
+    
+            <label for="password2">Confirm Password : </label>
+            <input type="password" name="password2" id="password2"><br>
+            <span class="error" id="error-conpass"></span><br><br>
+    
+            <input type="submit" value="Sign Up"><br><br>
+    
+            <p>For old user : <a href="{% url 'login' %}">Log in</a></p>
+        </form>
+    </div>
+    <script src="{% static 'js/signup.js' %}"></script>
 </body>
 
 </html>
+

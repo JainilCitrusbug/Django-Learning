@@ -1,12 +1,9 @@
-import email
-from pyexpat import model
-from re import template
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .models import student, info
+from .models import student, info, Category, Product
 from .forms import StudentRegistrationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -129,6 +126,19 @@ class ProfilePage(View):
             return render(request, 'application/profile.html')
         else:
             return HttpResponseRedirect('/login/')
+
+    def post(self, request):
+        title = request.POST['title']
+        description = request.POST['description']
+        price = request.POST['price']
+        category = request.POST['category']
+        category_object = Category.objects.filter(category_name=category).exists()
+        
+        if not category_object:
+            category_object= Category.objects.create(category_name=category)
+        pd = Product(product_name=title,product_description=description,product_price=price,product_category=category_object)
+        pd.save()
+        return HttpResponseRedirect('/profile/')
 
 class UserLogOut(View):
     def get(self, request):
