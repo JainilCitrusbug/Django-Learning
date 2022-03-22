@@ -25,4 +25,7 @@ urlpatterns = [
     path('profile/', views.Profile.as_view(), name='profile'),
     path('logout/', views.LogOut.as_view(), name='logout'),
     path('addproduct/', views.AddProduct.as_view(), name='addproduct'),
+    path('addcategory/', views.AddCategory.as_view(), name='addcategory'),
+    path('details/<int:id>/',views.Details.as_view(), name = 'details'),
+    path('edit/<int:id>/', views.EditProduct.as_view(), name='edit')
 ]

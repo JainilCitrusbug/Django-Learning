@@ -133,7 +133,7 @@ class ProfilePage(View):
         price = request.POST['price']
         category = request.POST['category']
         category_object = Category.objects.filter(category_name=category).exists()
-        
+
         if not category_object:
             category_object= Category.objects.create(category_name=category)
         pd = Product(product_name=title,product_description=description,product_price=price,product_category=category_object)

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="product-details">
+    <h1>Neme :- {{productview.product_name}}</h1>
+    <p>Description :- {{productview.product_description}}</p>
+    <h3>Price :- {{productview.product_price}}</h3>
+    {% if user.is_authenticated %}
+        <a href="{% url 'edit' id=productview.id%}"><input type="button" value="Edit" class="button-edit"></a>
+        <a href=""><input type="button" value="Delete" class="button-delete"></a>
+    {% endif %}
+    <br><br>
+</div>
+{% endblock content %}

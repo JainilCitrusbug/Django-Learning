@@ -2,6 +2,29 @@
 
 {% block content %}
 
-    <h1>Home Page</h1>
+<h1>Home Page</h1>
+
+{% for item in page_obj %}
+    <div class="product-list">
+        <h1>Neme :- {{item.product_name}}</h1>
+        <p>Description :- {{item.product_description}}</p>
+        <h3>Price :- {{item.product_price}}</h3>
+        <a href="{% url 'details' item.id %}">Readmore</a>
+    </div><br>
+{% endfor %}
+
+<div class="pagination">
+    <span>
+        {% if page_obj.has_previous %}
+            <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {% endif %}
+
+        <span>Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{page_obj.next_page_number}}">Next</a>
+        {% endif %}
+    </span>
+</div>
 
 {% endblock content %}

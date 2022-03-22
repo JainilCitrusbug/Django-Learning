@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="add-product">
+    <h1 style="text-align: center;">Add Category</h1><br>
+    <form action="" method="post" style="text-align: center;">
+        {% csrf_token %}
+    
+        <label for="category">Category :</label>
+        <input type="text" name="category" id="category"><br><br>
+    
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock content %}
