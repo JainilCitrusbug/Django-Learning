@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
-{% block content %}
 
+
+{% block content %}
 <h1>Profile page</h1>
+{% for item in list %}
+
+    {% if user.id == item.user.id %}
+        <div class="product-list">
+            <h1>Name :- {{item.product_name}}</h1>
+            <p>Description :- {{item.product_description}}</p>
+            <h3>Price :- {{item.product_price}}</h3>
+            <!-- <a href="{% url 'details' item.id %}">Readmore</a> -->
+            <a href="{% url 'edit' item.id%}"><input type="button" value="Edit" class="button-edit"></a>
+            <a href="{% url 'delete' item.id%}"><input type="button" value="Delete" class="button-delete"></a>
+            <br><br>
+        </div><br>
+    {% endif %}
+{% endfor %}
 
 {% endblock content %}

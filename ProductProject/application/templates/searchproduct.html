@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if searched %}
+    <h1>You searched : - {{searched}}</h1>
+    {% for item in product_searched %}
+        <div class="product-list">
+            <h1>Name :- {{item.product_name}}</h1>
+            <p>Description :- {{item.product_description}}</p>
+            <h3>Price :- {{item.product_price}}</h3>
+            <a href="{% url 'details' item.id %}">Readmore</a>
+        </div><br>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}
