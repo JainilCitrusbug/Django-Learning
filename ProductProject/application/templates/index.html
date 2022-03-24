@@ -8,9 +8,11 @@
 
 {% for item in page_object %}
     <div class="product-list">
+        <img src="{{item.product_image.url}}" alt="product_image">
         <h1>Name :- {{item.product_name}}</h1>
         <p>Description :- {{item.product_description}}</p>
         <h3>Price :- {{item.product_price}}</h3>
+        <h3>Username :- {{item.user}}</h3>
         <a href="{% url 'details' item.id %}">Readmore</a>
     </div><br>
 {% endfor %}

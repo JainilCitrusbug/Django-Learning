@@ -30,9 +30,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
-                    </li>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -40,15 +38,24 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Mobile</a></li>
+                            <!-- <li><a class="dropdown-item" href="#">Mobile</a></li>
                             <li><a class="dropdown-item" href="#">Laptop</a></li>
                             <li><a class="dropdown-item" href="#">Headphones</a></li>
-                            <li><a class="dropdown-item" href="#">PC</a></li>
+                            <li><a class="dropdown-item" href="#">PC</a></li> -->
+                            {% for list in category_menu %}
+                            <li><a class="dropdown-item" href="{% url 'category' list %}">{{list}}</a></li>
+                            {% endfor %}
                         </ul>
 
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'addproduct' %}">Add Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'userproduct' %}">My Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'profile' %}">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" aria-current="page" href="#">Hello <b>{{user}}</b></a>
@@ -57,8 +64,8 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Log Out</a>
                     </li>
                 </ul>
-                <form class="d-flex" method="post" action="{% url 'search' %}">
-                    {% csrf_token %}
+                <form class="d-flex" method="get" action="{% url 'search' %}">
+                    
                     <input class="form-control me-2" type="search" name="search" placeholder="Search"
                         aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>

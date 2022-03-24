@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from application import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Index.as_view(), name='index'),
     path('login/', views.LogIn.as_view(), name='login'),
     path('signup/', views.SignUp.as_view(), name='signup'),
+    path('userproduct/', views.UserProduct.as_view(), name='userproduct'),
     path('profile/', views.Profile.as_view(), name='profile'),
     path('logout/', views.LogOut.as_view(), name='logout'),
     path('addproduct/', views.AddProduct.as_view(), name='addproduct'),
@@ -30,4 +33,5 @@ urlpatterns = [
     path('edit/<int:id>/', views.EditProduct.as_view(), name='edit'),
     path('delete/<int:id>/', views.DeleteProduct.as_view(), name='delete'),
     path('search/', views.SearchProduct.as_view(), name='search'),
-]
+    path('category/<str:categories>/', views.CategoryView.as_view(), name='category'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

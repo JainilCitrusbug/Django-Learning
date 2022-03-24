@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Category : - {{categories}}</h1>
+
+{% for item in product %}
+    <div class="product-list">
+        <img src="{{item.product_image.url}}" alt="product_image">
+        <h1>Name :- {{item.product_name}}</h1>
+        <p>Description :- {{item.product_description}}</p>
+        <h3>Price :- {{item.product_price}}</h3>
+        <h3>Username :- {{item.user}}</h3>
+        <a href="{% url 'details' item.id %}">Readmore</a>
+    </div><br>
+{% endfor %}
+
+{% endblock content %}

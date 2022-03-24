@@ -1,22 +1,13 @@
 {% extends 'base.html' %}
-
-
-
 {% block content %}
-<h1>Profile page</h1>
-{% for item in list %}
 
-    {% if user.id == item.user.id %}
-        <div class="product-list">
-            <h1>Name :- {{item.product_name}}</h1>
-            <p>Description :- {{item.product_description}}</p>
-            <h3>Price :- {{item.product_price}}</h3>
-            <!-- <a href="{% url 'details' item.id %}">Readmore</a> -->
-            <a href="{% url 'edit' item.id%}"><input type="button" value="Edit" class="button-edit"></a>
-            <a href="{% url 'delete' item.id%}"><input type="button" value="Delete" class="button-delete"></a>
-            <br><br>
-        </div><br>
-    {% endif %}
-{% endfor %}
+    <h1>Profile Page</h1>
+
+    <div style="border: 1px solid black;margin: 0 20px;text-align: center;">
+        <h1>Name :- {{user}}</h1>
+        <h1>First name :- {{user.first_name}}</h1>
+        <h1>Last name :- {{user.last_name}}</h1>
+        <h1>Email :- {{user.email}}</h1>
+    </div>
 
 {% endblock content %}

@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h1>You searched : - {{searched}}</h1>
-{% if searched %}
-    {% for item in product_searched %}
+<h1>My Products</h1>
+{% for item in user.product_set.all %}
         <div class="product-list">
             <img src="{{item.product_image.url}}" alt="product_image">
             <h1>Name :- {{item.product_name}}</h1>
             <p>Description :- {{item.product_description}}</p>
             <h3>Price :- {{item.product_price}}</h3>
-            <a href="{% url 'details' item.id %}">Readmore</a>
+            <a href="{% url 'edit' item.id%}"><input type="button" value="Edit" class="button-edit"></a>
+            <a href="{% url 'delete' item.id%}"><input type="button" value="Delete" class="button-delete"></a>
+            <br><br>
         </div><br>
-    {% endfor %}
-{% endif %}
+{% endfor %}
 
 {% endblock content %}
