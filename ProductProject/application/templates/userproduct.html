@@ -2,16 +2,20 @@
 
 {% block content %}
 <h1>My Products</h1>
+<p style="color: red; text-align: center;"><i>Total Product :- {{count_product}}</i></p>
 {% for item in user.product_set.all %}
-        <div class="product-list">
+    {% if item.soft_delete == False %}
+        <div class="product-list"><br>
             <img src="{{item.product_image.url}}" alt="product_image">
+            <hr>
             <h1>Name :- {{item.product_name}}</h1>
             <p>Description :- {{item.product_description}}</p>
-            <h3>Price :- {{item.product_price}}</h3>
+            <h3>Price :- ₹{{item.product_price}}</h3>
             <a href="{% url 'edit' item.id%}"><input type="button" value="Edit" class="button-edit"></a>
             <a href="{% url 'delete' item.id%}"><input type="button" value="Delete" class="button-delete"></a>
             <br><br>
         </div><br>
+    {% endif %}
 {% endfor %}
 
 {% endblock content %}

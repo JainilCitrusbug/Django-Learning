@@ -1,5 +1,3 @@
-from pyexpat import model
-from urllib import request
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic.detail import DetailView
@@ -10,26 +8,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
 # Create your views here.
 
-class Index(View):
+class IndexView(View):
     def get(self, request):
         if request.user.is_authenticated:
+            count_product = Product.objects.filter(soft_delete = False).count()
             category_menu = Category.objects.all()
-            product = Product.objects.all().order_by('id')
+            product = Product.objects.filter(soft_delete = False).order_by('id')
             paginator = Paginator(product, 5)
             page_number = request.GET.get('page')
             page_object = paginator.get_page(page_number)
-            return render(request, 'index.html', {'page_object' : page_object,'category_menu':category_menu})
+            return render(request, 'index.html', {'page_object' : page_object,'category_menu':category_menu,'count_product':count_product})
         else:
             return redirect('/login/')
 
-class Details(DetailView):
+class DetailsView(DetailView):
     model = Product
     template_name = 'details.html'
     context_object_name = 'productview'
     pk_url_kwarg = 'id'
 
 
-class LogIn(View):
+class LogInView(View):
     def get(self,request):
         if not request.user.is_authenticated:
             return render(request, 'login.html')
@@ -46,7 +45,7 @@ class LogIn(View):
         else:
             return redirect('/login/')
 
-class SignUp(View):
+class SignUpView(View):
     def get(self,request):
         return render(request, 'signup.html')
 
@@ -63,27 +62,27 @@ class SignUp(View):
         myuser.save()
         return redirect('/login/')
 
-class UserProduct(View):
+class UserProductView(View):
     def get(self,request):
         if request.user.is_authenticated:
-            # product = Product.objects.all().order_by('id')
+            count_product = Product.objects.filter(user=request.user.id, soft_delete = False).count()
             category_menu = Category.objects.all()
             user = User.objects.get(username=request.user.username)
-            return render(request, 'userproduct.html', {'user' : user,'category_menu':category_menu})
+            return render(request, 'userproduct.html', {'user' : user,'category_menu':category_menu,'count_product':count_product})
         else:
             return redirect('/login/')
 
-class Profile(View):
+class ProfileView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         return render(request, 'profile.html', {'category_menu':category_menu})
 
-class LogOut(View):
+class LogOutView(View):
     def get(self, request):
         logout(request)
         return redirect('/')
 
-class AddProduct(View):
+class AddProductView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         if request.user.is_authenticated:
@@ -103,7 +102,7 @@ class AddProduct(View):
         pd.save()
         return redirect('/userproduct/')
 
-class AddCategory(View):
+class AddCategoryView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         return render(request, 'addcategory.html',{'category_menu':category_menu})
@@ -118,30 +117,40 @@ class AddCategory(View):
         
         return redirect('/addproduct/')
 
-class EditProduct(UpdateView):
+class EditProductView(UpdateView):
     model = Product
     fields = ['product_name','product_description','product_price','product_category','product_image']
     template_name = 'editproduct.html'
     pk_url_kwarg = 'id'
     success_url ="/userproduct/"
 
-class DeleteProduct(DeleteView):
-    model = Product
-    template_name = 'deleteproduct.html'
-    pk_url_kwarg = 'id'
-    success_url ="/userproduct/"
+# class DeleteProductView(DeleteView):
+#     model = Product
+#     template_name = 'deleteproduct.html'
+#     pk_url_kwarg = 'id'
+#     success_url ="/userproduct/"
 
-class SearchProduct(View):
+class DeleteProductView(View):
+    def get(self, request, id):
+        product = Product.objects.get(id=id)
+        product.soft_delete = True
+        product.save()
+        return redirect('/userproduct/')
+        
+
+class SearchProductView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         searched = request.GET.get('search')
-        product_searched = Product.objects.filter(product_name__icontains=searched)
-        return render(request, 'searchproduct.html', {'searched':searched,'product_searched':product_searched,'category_menu':category_menu})
+        count_product = Product.objects.filter(product_name__icontains=searched, soft_delete = False).count()
+        product_searched = Product.objects.filter(product_name__icontains=searched, soft_delete = False)
+        return render(request, 'searchproduct.html', {'searched':searched,'product_searched':product_searched,'category_menu':category_menu,'count_product':count_product})
 
 
 class CategoryView(View):
     def get(self, request, categories):
+        count_product = Product.objects.filter(product_category__category_name=categories, soft_delete = False).count()
         category_menu = Category.objects.all()
-        product = Product.objects.filter(product_category__category_name=categories)
-        return render(request, 'category.html',{'categories':categories,'product':product,'category_menu':category_menu})
+        product = Product.objects.filter(product_category__category_name=categories, soft_delete = False)
+        return render(request, 'category.html',{'categories':categories,'product':product,'category_menu':category_menu,'count_product':count_product})
 

@@ -1,5 +1,5 @@
 .product-list{
-    border: 1px solid black;
+    border: 5px solid black;
     text-align: center;
     margin: 0 20px;
     /* height: 180px; */
@@ -11,7 +11,7 @@
 
 .product-details{
     margin: 0 20px;
-    border: 1px solid black;
+    border: 5px solid black;
     text-align: center;
 }
 

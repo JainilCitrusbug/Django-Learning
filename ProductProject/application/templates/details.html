@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="product-details">
+<div class="product-details"><br>
     <img src="{{productview.product_image.url}}" alt="product_image">
+    <hr>
     <h1>Name :- {{productview.product_name}}</h1>
     <p>Description :- {{productview.product_description}}</p>
-    <h3>Price :- {{productview.product_price}}</h3>
+    <h3>Price :- ₹{{productview.product_price}}</h3>
     <h3><i>Uaername :- {{productview.user}}</i></h3>
     {% if user.is_superuser %}
         <a href="{% url 'edit' id=productview.id%}"><input type="button" value="Edit" class="button-edit"></a>
