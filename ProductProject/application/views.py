@@ -74,8 +74,11 @@ class UserProductView(View):
 
 class ProfileView(View):
     def get(self, request):
-        category_menu = Category.objects.all()
-        return render(request, 'profile.html', {'category_menu':category_menu})
+        if request.user.is_authenticated:
+            category_menu = Category.objects.all()
+            return render(request, 'profile.html', {'category_menu':category_menu})
+        else:
+            return redirect('/login/')
 
 class LogOutView(View):
     def get(self, request):
@@ -105,7 +108,10 @@ class AddProductView(View):
 class AddCategoryView(View):
     def get(self, request):
         category_menu = Category.objects.all()
-        return render(request, 'addcategory.html',{'category_menu':category_menu})
+        if request.user.is_authenticated:
+            return render(request, 'addcategory.html',{'category_menu':category_menu})
+        else:
+            return redirect('/login/')
 
     def post(self, request):
         category = request.POST['category']
