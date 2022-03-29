@@ -17,7 +17,7 @@
         <p>Description :- {{item.product_description}}</p>
         <h3>Price :- ₹{{item.product_price}}</h3>
         <h3>Username :- {{item.user}}</h3>
-        <a href="{% url 'details' item.id %}">Readmore</a>
+        <a href="{% url 'details' item.id %}"><button style="border: 2px solid black;background-color: lightgrey;">Readmore</button></a><br><br>
     </div><br>
 {% endfor %}
 

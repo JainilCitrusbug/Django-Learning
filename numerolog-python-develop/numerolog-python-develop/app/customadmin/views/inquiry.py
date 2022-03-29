@@ -64,8 +64,8 @@ class InquiryCreateView(MyNewFormsetCreateView):
     """View to create Inquiry"""
 
     model = Inquiry
-    inline_model = InquiryType
-    inlines = [InquiryTypeInline, ]
+    # inline_model = InquiryType    #########################
+    # inlines = [InquiryTypeInline, ]
     form_class = InquiryCreationForm
     template_name = "customadmin/inquiry/inquiry_form.html"
     permission_required = ("customadmin.add_inquiry",)
@@ -85,8 +85,8 @@ class InquiryUpdateView(MyNewFormsetUpdateView):
     """View to update Inquiry"""
 
     model = Inquiry
-    inline_model = InquiryType
-    inlines = [InquiryTypeInline, ]
+    # inline_model = InquiryType  ################
+    # inlines = [InquiryTypeInline, ]
     form_class = InquiryChangeForm
     template_name = "customadmin/inquiry/inquiry_form.html"
     permission_required = ("customadmin.change_inquiry",)

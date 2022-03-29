@@ -62,7 +62,7 @@ class CategoryImageDeleteView(MyDeleteView):
     permission_required = ("customadmin.delete_category-image",)
 
     def get_success_url(self):
-        return reverse("customadmin:category-image-list")
+        return reverse("customadmin:categoryimage-list") ################
 
 class CategoryImageAjaxPagination(DataTableMixin, HasPermissionsMixin, MyLoginRequiredView):
     """Built this before realizing there is

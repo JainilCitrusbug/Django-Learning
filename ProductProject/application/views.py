@@ -67,7 +67,7 @@ class UserProductView(View):
         if request.user.is_authenticated:
             count_product = Product.objects.filter(user=request.user.id, soft_delete = False).count()
             category_menu = Category.objects.all()
-            user = User.objects.get(username=request.user.username)
+            user = User.objects.get(username=request.user)
             return render(request, 'userproduct.html', {'user' : user,'category_menu':category_menu,'count_product':count_product})
         else:
             return redirect('/login/')
@@ -97,7 +97,7 @@ class AddProductView(View):
         title = request.POST['title']
         description = request.POST['description']
         price = request.POST['price']
-        image = request.FILES['photo']
+        image = request.FILES.get('photo')
         category = request.POST['category']
         category_object = Category.objects.get(category_name=category)
         users = User.objects.get(id=request.user.id)  
@@ -148,15 +148,15 @@ class SearchProductView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         searched = request.GET.get('search')
-        count_product = Product.objects.filter(product_name__icontains=searched, soft_delete = False).count()
         product_searched = Product.objects.filter(product_name__icontains=searched, soft_delete = False)
+        count_product = product_searched.count()
         return render(request, 'searchproduct.html', {'searched':searched,'product_searched':product_searched,'category_menu':category_menu,'count_product':count_product})
 
 
 class CategoryView(View):
     def get(self, request, categories):
-        count_product = Product.objects.filter(product_category__category_name=categories, soft_delete = False).count()
         category_menu = Category.objects.all()
         product = Product.objects.filter(product_category__category_name=categories, soft_delete = False)
+        count_product = product.count()
         return render(request, 'category.html',{'categories':categories,'product':product,'category_menu':category_menu,'count_product':count_product})
 

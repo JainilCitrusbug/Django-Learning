@@ -12,7 +12,7 @@
     <p>Description :- {{productview.product_description}}</p>
     <h3>Price :- ₹{{productview.product_price}}</h3>
     <h3><i>Uaername :- {{productview.user}}</i></h3>
-    {% if user.is_superuser %}
+    {% if user.is_superuser or productview.user == request.user %}
         <a href="{% url 'edit' id=productview.id%}"><input type="button" value="Edit" class="button-edit"></a>
         <a href="{% url 'delete' id=productview.id%}"><input type="button" value="Delete" class="button-delete"></a>
     {% endif %}

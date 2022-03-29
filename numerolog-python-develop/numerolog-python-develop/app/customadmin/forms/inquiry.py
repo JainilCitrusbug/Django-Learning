@@ -74,7 +74,7 @@ class InquiryChangeForm(forms.ModelForm):
         self.fields['note'].required = False
 
     def clean(self):
-        cleaned_data = super(InquiryCreationForm, self).clean()
+        cleaned_data = super(InquiryChangeForm, self).clean() ###################
         name = cleaned_data.get("name")
         email = cleaned_data.get("email")
         phone = cleaned_data.get("phone")
