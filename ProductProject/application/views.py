@@ -15,7 +15,7 @@ class IndexView(View):
     def get(self, request):
         if request.user.is_authenticated:
             products = Product.objects.filter(soft_delete = False).order_by('id')
-            product = products.order_by('id')
+            product = products.order_by('-id')
             count_product = products.count()
             category_menu = Category.objects.all()
             paginator = Paginator(product, 5)
@@ -166,10 +166,18 @@ class SearchProductView(View):
         return JsonResponse(product_searched_json, safe=False)
 
 
+# class CategoryView(View):
+#     def get(self, request, categories):
+#         category_menu = Category.objects.all()
+#         product = Product.objects.filter(product_category__category_name=categories, soft_delete = False)
+#         count_product = product.count()
+#         return render(request, 'category.html',{'categories':categories,'product':product,'category_menu':category_menu,'count_product':count_product})
+
 class CategoryView(View):
     def get(self, request, categories):
-        category_menu = Category.objects.all()
+        # category_menu = Category.objects.all()
         product = Product.objects.filter(product_category__category_name=categories, soft_delete = False)
-        count_product = product.count()
-        return render(request, 'category.html',{'categories':categories,'product':product,'category_menu':category_menu,'count_product':count_product})
-
+        # count_product = product.count()
+        # return render(request, 'category.html',{'categories':categories,'product':product,'category_menu':category_menu,'count_product':count_product})
+        category_json = serializers.serialize('json', product)
+        return JsonResponse(category_json, safe=False)

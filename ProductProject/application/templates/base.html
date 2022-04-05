@@ -48,7 +48,7 @@
                             <li><a class="dropdown-item" href="#">Headphones</a></li>
                             <li><a class="dropdown-item" href="#">PC</a></li> -->
                             {% for list in category_menu %}
-                            <li><a class="dropdown-item" href="{% url 'category' list %}">{{list}}</a></li>
+                            <li><a class="dropdown-item a" >{{list}}</a></li>
                             {% endfor %}
                         </ul>
 
@@ -83,6 +83,7 @@
     {% endblock content %}
 
     <script>
+// ------------------------------Search Bar AJAX Code---------------------------------
             $('#button').on('click',function(){
                 let searched = $('#search').val();
                 $.ajax({
@@ -122,6 +123,41 @@
                     }
                 });
             });
+
+
+// ------------------------------Category AJAX Code---------------------------------
+            $('.a').on('click', function(){
+                let b = $(this).text()
+                console.log(b)
+                $.ajax({
+                    type: "get",
+                    url: "/category/"+b,
+                    data: {category:b},
+                    success: function(data){
+                        console.log(data)
+                        let c = JSON.parse(data)
+                        $('.main').empty()
+                        for (const key in c) {
+                               let d = c[key].fields;
+                               $('.main').append(`<div class="card mb-3" style="text-align: center;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="/media/${d.product_image}" class="img-fluid rounded-start" alt="product_image">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Name :- ${d.product_name}</h5>
+                  <p class="card-text">Description :- ${d.product_description}</p>
+                  <h5 class="card-title">Price :- ₹${d.product_price}</h5>
+                  <h5 class="card-title">Username :- ${d.user}</h5>
+                  <a href="/details/${c[key].pk}/" class="btn btn-primary">Readmore</a>
+                </div>
+              </div>
+            </div>
+          </div>`)}
+                    }
+                })
+            })
     </script>
 </body>
 

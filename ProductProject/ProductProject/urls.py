@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from application import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,4 +35,5 @@ urlpatterns = [
     path('delete/<int:id>/', views.DeleteProductView.as_view(), name='delete'),
     path('search/', views.SearchProductView.as_view(), name='search'),
     path('category/<str:categories>/', views.CategoryView.as_view(), name='category'),
+    path('api/', include('API.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
