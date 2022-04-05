@@ -9,31 +9,65 @@
 <h1>Home Page</h1>
 <p style="color: red; text-align: center;"><i>Total Product :- {{count_product}}</i></p>
 
+<div class="main">
 {% for item in page_object %}
-    <div class="product-list"><br>
-        <img src="{{item.product_image.url}}" alt="product_image">
-        <hr>
-        <h1>Name :- {{item.product_name}}</h1>
-        <p>Description :- {{item.product_description}}</p>
-        <h3>Price :- ₹{{item.product_price}}</h3>
-        <h3>Username :- {{item.user}}</h3>
-        <a href="{% url 'details' item.id %}"><button style="border: 2px solid black;background-color: lightgrey;">Readmore</button></a><br><br>
-    </div><br>
+        <!-- <div class="product-list"><br>
+            <img src="{{item.product_image.url}}" alt="product_image">
+            <hr>
+            <h1>Name :- {{item.product_name}}</h1>
+            <p>Description :- {{item.product_description}}</p>
+            <h3>Price :- ₹{{item.product_price}}</h3>
+            <h3>Username :- {{item.user}}</h3>
+            <a href="{% url 'details' item.id %}"><button style="border: 2px solid black;background-color: lightgrey;">Readmore</button></a><br><br>
+        </div><br> -->
+
+        <div class="card mb-3" style="text-align: center;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{item.product_image.url}}" class="img-fluid rounded-start" alt="product_image">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Name :- {{item.product_name}}</h5>
+                  <p class="card-text">Description :- {{item.product_description}}</p>
+                  <h5 class="card-title">Price :- ₹{{item.product_price}}</h5>
+                  <h5 class="card-title">Username :- {{item.user}}</h5>
+                  <a href="{% url 'details' item.id %}" class="btn btn-primary">Readmore</a>
+                </div>
+              </div>
+            </div>
+          </div>
 {% endfor %}
 
-<div class="pagination">
-    <span>
-        {% if page_object.has_previous %}
-            <a href="?page={{page_object.previous_page_number}}"><button style="border: 2px solid black;">Previous</button></a>
-        {% endif %}
+        <div class="pagination">
+            <span>
+                {% if page_object.has_previous %}
+                    <a href="?page={{page_object.previous_page_number}}"><button style="border: 2px solid black;">Previous</button></a>
+                {% endif %}
+        
+                <span>Page {{page_object.number}} of {{page_object.paginator.num_pages}}</span>
+        
+                {% if page_object.has_next %}
+                    <a href="?page={{page_object.next_page_number}}"><button style="border: 2px solid black;">Next</button></a>
+                {% endif %}
+            </span>
+            <br><br>
+        </div>
 
-        <span>Page {{page_object.number}} of {{page_object.paginator.num_pages}}</span>
-
-        {% if page_object.has_next %}
-            <a href="?page={{page_object.next_page_number}}"><button style="border: 2px solid black;">Next</button></a>
-        {% endif %}
-    </span>
-    <br><br>
+        <!-- <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            {% if page_object.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{page_object.previous_page_number}}">Previous</a></li>
+            {% endif %}
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            {% if page_object.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{page_object.next_page_number}}">Next</a></li>
+            {% endif %}
+          </ul>
+        </nav> -->
 </div>
+
 
 {% endblock content %}

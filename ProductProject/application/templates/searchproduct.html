@@ -10,14 +10,22 @@
 <p style="color: red; text-align: center;"><i>Total Product :- {{count_product}}</i></p>
 {% if searched %}
     {% for item in product_searched %}
-        <div class="product-list"><br>
-            <img src="{{item.product_image.url}}" alt="product_image">
-            <hr>
-            <h1>Name :- {{item.product_name}}</h1>
-            <p>Description :- {{item.product_description}}</p>
-            <h3>Price :- ₹{{item.product_price}}</h3>
-            <a href="{% url 'details' item.id %}"><button style="border: 2px solid black;background-color: lightgrey;">Readmore</button></a><br><br>
-        </div><br>
+    <div class="card mb-3" style="text-align: center;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{item.product_image.url}}" class="img-fluid rounded-start" alt="product_image">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Name :- {{item.product_name}}</h5>
+              <p class="card-text">Description :- {{item.product_description}}</p>
+              <h5 class="card-title">Price :- ₹{{item.product_price}}</h5>
+              <h5 class="card-title">Username :- {{item.user}}</h5>
+              <a href="{% url 'details' item.id %}" class="btn btn-primary">Readmore</a>
+            </div>
+          </div>
+        </div>
+      </div>
     {% endfor %}
 {% endif %}
 

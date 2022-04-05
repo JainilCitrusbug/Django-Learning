@@ -6,14 +6,18 @@ from django.contrib.auth.models import User
 from .models import Category, Product
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator
+from django.db.models import Q
+from django.core import serializers
+from django.http import JsonResponse
 # Create your views here.
 
 class IndexView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            count_product = Product.objects.filter(soft_delete = False).count()
+            products = Product.objects.filter(soft_delete = False).order_by('id')
+            product = products.order_by('id')
+            count_product = products.count()
             category_menu = Category.objects.all()
-            product = Product.objects.filter(soft_delete = False).order_by('id')
             paginator = Paginator(product, 5)
             page_number = request.GET.get('page')
             page_object = paginator.get_page(page_number)
@@ -148,9 +152,18 @@ class SearchProductView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         searched = request.GET.get('search')
-        product_searched = Product.objects.filter(product_name__icontains=searched, soft_delete = False)
+        product_searched = Product.objects.filter(Q(product_name__icontains=searched) | Q(product_description__icontains=searched) | Q(product_price__icontains=searched), soft_delete = False)
+        product_searched_json = serializers.serialize('json', product_searched)
         count_product = product_searched.count()
-        return render(request, 'searchproduct.html', {'searched':searched,'product_searched':product_searched,'category_menu':category_menu,'count_product':count_product})
+        # data = {
+        #     # 'searched':searched,
+        #     'product_searched':product_searched_json,
+        #     # 'category_menu':category_menu,
+        #     # 'count_product':count_product
+        #     }
+        print(product_searched_json)
+        # return render(request, 'searchproduct.html', data)
+        return JsonResponse(product_searched_json, safe=False)
 
 
 class CategoryView(View):

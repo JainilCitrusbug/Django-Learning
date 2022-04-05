@@ -8,4 +8,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product_name', 'product_description', 'product_price', 'product_category','user']
+    list_display = ['id', 'product_name', 'product_description', 'product_price', 'product_category','user','soft_delete']
