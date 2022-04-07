@@ -152,7 +152,7 @@ class SearchProductView(View):
     def get(self, request):
         category_menu = Category.objects.all()
         searched = request.GET.get('search')
-        product_searched = Product.objects.filter(Q(product_name__icontains=searched) | Q(product_description__icontains=searched) | Q(product_price__icontains=searched), soft_delete = False)
+        product_searched = Product.objects.filter(Q(product_name__icontains=searched) | Q(product_description__icontains=searched) | Q(product_category__category_name__icontains=searched) | Q(product_price__icontains=searched), soft_delete = False)
         product_searched_json = serializers.serialize('json', product_searched)
         count_product = product_searched.count()
         # data = {

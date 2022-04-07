@@ -8,11 +8,23 @@
 
     <h1>Profile Page</h1>
 
-    <div style="border: 1px solid black;margin: 0 20px;text-align: center;">
+    <!-- <div style="border: 1px solid black;margin: 0 20px;text-align: center;">
         <h1>Name :- {{user}}</h1>
         <h1>First name :- {{user.first_name}}</h1>
         <h1>Last name :- {{user.last_name}}</h1>
         <h1>Email :- {{user.email}}</h1>
-    </div>
+    </div> -->
+
+    <div class="card" style="width: 20rem;margin-left: 40%;">
+        <div class="card-body">
+          <h5 class="card-title">Name :- {{user}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">First name :- {{user.first_name}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Last name :- {{user.last_name}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Email :- {{user.email}}</h6>
+          <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a> -->
+        </div>
+      </div>
 
 {% endblock content %}
