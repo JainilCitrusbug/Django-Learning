@@ -20,6 +20,21 @@ from application import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from drf_yasg.views import get_schema_view
+from django.views.generic import TemplateView
+from rest_framework import permissions
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title='CRUD API',
+        default_version="v1",
+        description='Test 1'
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='index'),
@@ -36,4 +51,6 @@ urlpatterns = [
     path('search/', views.SearchProductView.as_view(), name='search'),
     path('category/<str:categories>/', views.CategoryView.as_view(), name='category'),
     path('api/', include('API.urls')),
+    path('modelapi/', include('API.model_viewset_urls')),
+    path('swagger-ui/', schema_view.with_ui('swagger', cache_timeout=0), name='openapi-schema'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

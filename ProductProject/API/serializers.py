@@ -4,10 +4,6 @@ from rest_framework import serializers
 
 class UserSerializers(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    # username = serializers.CharField(max_length=100)
-    # first_name = serializers.CharField(max_length=100)
-    # last_name = serializers.CharField(max_length=100)
-    # email = serializers.EmailField(max_length=100)
 
     class Meta:
         model = User
@@ -42,12 +38,6 @@ class CategorySerializers(serializers.ModelSerializer):
 class ProductSerializers(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     soft_delete = serializers.BooleanField(read_only=True)
-    # product_name = serializers.CharField(max_length=100)
-    # product_description = serializers.CharField(max_length=500)
-    # product_price = serializers.IntegerField()
-    # product_image = serializers.ImageField()
-    # product_category = CategorySerializers()
-    # user = UserSerializers()
 
     class Meta:
         model = Product

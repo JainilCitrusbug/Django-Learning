@@ -91,9 +91,10 @@
                     url: "/search/",
                     data: {search : searched},
                     success: function(data){
+                        console.log(data)
                         let a = JSON.parse(data)
                         console.log('SUCCESS');
-                        console.log(data);
+                        console.log(a);
                         $('.main').empty()
                         
                            for (const key in a) {
