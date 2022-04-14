@@ -50,7 +50,14 @@ urlpatterns = [
     path('delete/<int:id>/', views.DeleteProductView.as_view(), name='delete'),
     path('search/', views.SearchProductView.as_view(), name='search'),
     path('category/<str:categories>/', views.CategoryView.as_view(), name='category'),
+
+    
     path('api/', include('API.urls')),
     path('modelapi/', include('API.model_viewset_urls')),
+
+    
     path('swagger-ui/', schema_view.with_ui('swagger', cache_timeout=0), name='openapi-schema'),
+
+
+    path('customadmin/', include('customadmin.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

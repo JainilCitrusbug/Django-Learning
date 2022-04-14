@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: aquamarine;
+}
+
+.form-body{
+    text-align: center;
+    margin-top: 150px;
+    margin-left: 700px;
+    margin-right: 700px;
+    padding: 50px 0;
+    background-color: white;
+}
+
+.error{
+    color: red;
+}
+

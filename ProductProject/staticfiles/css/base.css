@@ -1,0 +1,32 @@
+.product-list{
+    border: 5px solid black;
+    text-align: center;
+    margin: 0 20px;
+    /* height: 180px; */
+}
+
+.pagination{
+    padding-left: 900px;
+}
+
+.product-details{
+    margin: 0 20px;
+    border: 5px solid black;
+    text-align: center;
+}
+
+.product-details h1{
+    font-size: 100px;
+}
+
+.button-edit{
+    background-color: rgb(1, 162, 255);
+    border: 0;
+    padding: 7px 50px;
+}
+
+.button-delete{
+    background-color: red;
+    border: 0;
+    padding: 7px 50px;
+}

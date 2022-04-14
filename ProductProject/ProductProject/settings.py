@@ -15,6 +15,9 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,6 +46,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'application',
     'API',
+
+    'crispy_forms',
+    'widget_tweaks',
+    'customadmin',
+
 ]
 
 MIDDLEWARE = [
@@ -60,7 +68,7 @@ ROOT_URLCONF = 'ProductProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [STATIC_DIR,]
 
 
 # Default primary key field type
@@ -151,3 +160,4 @@ SWAGGER_SETTINGS = {
 }
 
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"
