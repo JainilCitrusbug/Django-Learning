@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .. import views
 
 app_name='customadmin'
 
@@ -45,4 +45,14 @@ urlpatterns = [
     path("category/<int:pk>/delete/", views.CategoryDeleteView.as_view(), name="category-delete"),
 
     path("export_category_csv", views.export_category_csv, name="export_category_csv"),
+
+
+
+    path("product/", views.ProductListView.as_view(), name="product-list"),
+    path("product/create/", views.ProductCreateView.as_view(), name="product-create"),
+    path("product/<int:pk>/detail/", views.ProductDetailView.as_view(), name="product-detailview"),
+    path("product/<int:pk>/update/", views.ProductUpdateView.as_view(), name="product-update"),
+    path("product/<int:pk>/delete/", views.ProductDeleteView.as_view(), name="product-delete"),
+
+    path("export_product_csv", views.export_product_csv, name="export_product_csv"),
 ]

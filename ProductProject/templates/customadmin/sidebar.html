@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li {% if 'product/' in request.path %}class="active" {% endif %}>
-                <a href="#">
+                <a href="{% url 'customadmin:product-list' %}">
                     <i class="fa fa-user fa-fw fa-2x"></i>
                     <span class="nav-label">Product</span>
                 </a>

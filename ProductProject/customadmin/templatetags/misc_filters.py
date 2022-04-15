@@ -47,8 +47,8 @@ def admin_urlname(value, arg):
         pattern = "%s:%s-%s" % ('customadmin', 'user', arg)
     if value.model_name == 'category':
         pattern = "%s:%s-%s" % ('customadmin', 'category', arg)
-    if value.model_name == 'creator':
-        pattern = "%s:%s-%s" % ('customadmin', 'creator', arg)
+    if value.model_name == 'product':
+        pattern = "%s:%s-%s" % ('customadmin', 'product', arg)
     if value.model_name == 'creatorclass':
         pattern = "%s:%s-%s" % ('customadmin', 'creatorclass', arg)
     if value.model_name == 'stream':

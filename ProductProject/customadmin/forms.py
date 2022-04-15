@@ -138,3 +138,65 @@ class CategoryForm(forms.ModelForm):
             instance.save()
 
         return instance
+
+
+class ProductForm(forms.ModelForm):
+    """Custom User"""
+
+    class Meta():
+        model = Product
+        fields = [
+            "product_name",
+            "product_description",
+            "product_price",
+            "product_image",
+            "product_category",
+            "user",
+            "soft_delete",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ProductForm, self).clean()
+        product_name = cleaned_data.get("product_name")
+        product_description = cleaned_data.get("product_description")
+        product_price = cleaned_data.get("product_price")
+        product_image = cleaned_data.get("product_image")
+        product_category = cleaned_data.get("product_category")
+        user = cleaned_data.get("user")
+
+
+        if not product_name :
+            raise forms.ValidationError(
+                "Please add product."
+            )
+        if not product_description :
+            raise forms.ValidationError(
+                "Please add description."
+            )
+        if not product_price :
+            raise forms.ValidationError(
+                "Please add price."
+            )
+        if not product_image :
+            raise forms.ValidationError(
+                "Please add image."
+            )
+        if not product_category :
+            raise forms.ValidationError(
+                "Please add category."
+            )
+        if not user :
+            raise forms.ValidationError(
+                "Please add user."
+            )
+       
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        if commit:
+            instance.save()
+
+        return instance

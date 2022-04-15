@@ -152,8 +152,6 @@ class UserDetailView(MyDetailView):
         # self.context['booked_services'] = BookedService.objects.filter(user=pk)
         return render(request, self.template_name, self.context)
 
-
-
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "customadmin/index.html"
     context = {}
@@ -179,7 +177,6 @@ class UserListView(MyListView):
 
     def get_queryset(self):
         return self.model.objects.exclude(is_staff=True).exclude(email=self.request.user).exclude(email=None)
-
 
 class UserCreateView(MyCreateView):
     """View to create User"""
@@ -371,12 +368,10 @@ class CategoryListView(MyListView):
     model = Category
     queryset = model.objects.all()
     template_name = "customadmin/category/category_list.html"
-    permission_required = ("customadmin.view_user",)
+    permission_required = ("customadmin.view_category",)
 
     def get_queryset(self):
         return self.model.objects.all()
-
-
 
 class CategoryCreateView(MyCreateView):
     """View to create Category"""
@@ -430,3 +425,104 @@ class CategoryDeleteView(MyDeleteView):
     def get_success_url(self):
         # opts = self.model._meta
         return reverse("customadmin:category-list")
+
+# -----------------------------------------------------------------------------
+# Product
+# -----------------------------------------------------------------------------
+
+def export_product_csv(request):
+    
+    output = []
+    response = HttpResponse (content_type='text/csv')
+    filename = u"Product.csv"
+    response['Content-Disposition'] = u'attachment; filename="{0}"'.format(filename)
+
+    writer = csv.writer(response)
+    query_set = Product.objects.all()
+
+    #Header
+    writer.writerow(['product_name', "product_description",'product_price', 'product_image', 'product_category','user','soft_delete'])
+    for product in query_set:
+        # if user.groups.all():
+        #     gp = user.groups.all()[0].name
+        # else:
+        #     gp = None
+
+        if not product.product_image:
+            avatar = None
+        else:
+            avatar = product.product_image.url
+
+
+        output.append([product.product_name, product.product_description, product.product_price, request.build_absolute_uri(avatar), product.product_category,product.user, product.soft_delete,])
+    #CSV Data
+    writer.writerows(output)
+    return response
+
+class ProductListView(MyListView):
+    """View for Category listing"""
+
+    # paginate_by = 25
+    ordering = ["id"]
+    model = Product
+    queryset = model.objects.all()
+    template_name = "customadmin/product/product_list.html"
+    permission_required = ("customadmin.view_product",)
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+class ProductCreateView(MyCreateView):
+    """View to create Category"""
+
+    model = Product
+    form_class = ProductForm
+    template_name = "customadmin/product/product_form.html"
+    permission_required = ("customadmin.add_product",)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_success_url(self):
+        # opts = self.model._meta
+        return reverse("customadmin:product-list")
+
+class ProductDetailView(MyDetailView):
+    template_name = "customadmin/product/product_detail.html"
+    context = {}
+
+    def get(self, request, pk):
+        self.context['product_detail'] = Product.objects.filter(pk=pk).first()
+        return render(request, self.template_name, self.context)
+
+class ProductUpdateView(MyUpdateView):
+    """View to update User"""
+
+    model = Product
+    form_class = ProductForm
+    template_name = "customadmin/product/product_form_update.html"
+    permission_required = ("customadmin.change_product",)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_success_url(self):
+        # opts = self.model._meta
+        return reverse("customadmin:product-list")
+
+class ProductDeleteView(MyDeleteView):
+    """View to delete User"""
+
+    model = Product
+    template_name = "customadmin/confirm_delete.html"
+    permission_required = ("customadmin.delete_product",)
+
+    def get_success_url(self):
+        # opts = self.model._meta
+        return reverse("customadmin:product-list")
+
+

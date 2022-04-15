@@ -24,10 +24,10 @@
     </div>
 
 
-    {% elif opts.verbose_name_plural == 'Leads' %}
+    {% elif opts.verbose_name_plural == 'Products' %}
 
     <div class="float-right lead" style="margin-left: 10px;">      
-      <a href="{% url 'customadmin:export_product_intrest_csv' %}" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Export CSV</a>
+      <a href="{% url 'customadmin:export_product_csv' %}" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Export CSV</a>
     </div>
 
     {% elif opts.verbose_name_plural == 'Groups' %}
